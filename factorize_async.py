@@ -34,16 +34,11 @@ def factorize(numbers: list) -> list[list]:
     return lists
 
 
-def callback(result):
-    print(f"The result of the program: {len(result)}")
-
-
 @run_time_decorator
 def factorize_async(task):
     with Pool(cpu_count()) as p:
-        p.map_async(factorize_number, task, callback=callback)
-        p.close()
-        p.join()
+        result = p.map(factorize_number, task)
+        return result
 
 
 if __name__ == "__main__":
@@ -295,8 +290,10 @@ if __name__ == "__main__":
         4567,
         45678,
     ]
-    factorize(task)
-    factorize_async(task)
+    a = factorize(task)
+    print(len(a))
+    b = factorize_async(task)
+    print(len(b))
 
 # Results:
 # My function factorize took 23.659733057022095 to run
