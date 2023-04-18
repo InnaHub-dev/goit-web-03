@@ -38,6 +38,7 @@ def factorize(numbers: list) -> list[list]:
 def factorize_async(task):
     with Pool(cpu_count()) as p:
         result = p.map(factorize_number, task)
+        p.close()
         return result
 
 
